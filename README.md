@@ -6,14 +6,13 @@ Rest API of a game at home app, using Django Rest Framework
 ### Requirements:
 Install pyhton and add it to path (if windows),
 
-1. `python -m venv env`
+1. `python -m venv env` & `env\Scripts\activate`
 2. `pip install django`
 3. `pip install djangorestframework`
 4. `pip install -U drf-yasg`
 
 ## Start project
 
-Run once `env\Scripts\activate` then:
 `python manage.py runserver`
 
 ## Run migration files
