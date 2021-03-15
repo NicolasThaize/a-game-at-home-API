@@ -1,1 +1,4 @@
 env
+a_game_at_home/__pycache__/*
+venv/*
+.idea
