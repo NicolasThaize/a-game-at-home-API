@@ -13,6 +13,7 @@ Install pyhton and add it to path (if windows),
 
 ## Start project
 
+Run once `env\Scripts\activate` then:
 `python manage.py runserver`
 
 ## Run migration files
