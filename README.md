@@ -1,5 +1,5 @@
 # a-game-at-home-API
-Rest API of a game at home app
+Rest API of a game at home app, using Django Rest Framework
 
 ## Init project
 
