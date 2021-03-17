@@ -2,3 +2,6 @@ env
 a_game_at_home/__pycache__/*
 venv/*
 .idea
+agah/__pycache__/*
+agah/migrations/__pycache__/*
+infosDB.md
