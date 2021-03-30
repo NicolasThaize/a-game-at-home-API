@@ -1,30 +1,18 @@
 #Start the project :
 
 1:
-    Install env component
-    `pip install virtualenv`
-
-2:
-    create .env
-    `virtualenv env`
-
-3:
-    activate it
-    `.\env\Scripts\activate`
-
-4:
     `pip install django`
 
-5:
+2:
     `django-admin startproject MyAPI`
 
-6:
+3:
     `cd .\src\` Should be default called MyAPI if that's the project name
 
-7:
+4:
     Create Api core folders.
     `python manage.py startapp API`
-8:
+5:
     Install the REST framework
     `pip install djangorestframework`
 
