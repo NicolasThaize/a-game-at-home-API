@@ -31,17 +31,19 @@
 #Basic commands
 
 #Migrations
-    Make new migrations based on models, use before "migrate"
-    `python manage.py makemigrations`
 
-    Apply migrations to database
-    `python manage.py migrate`
-    Should have everything say ...OK
+Make new migrations based on models, use before "migrate"
+`python manage.py makemigrations`
+
+Apply migrations to database
+`python manage.py migrate`
+Should have everything say ...OK
 
 #Development server
-    run API server
-    `python manage.py runserver`
-    Should have running server URL as result if successful.
+
+run API server
+`python manage.py runserver`
+Should have running server URL as result if successful.
 
 
 
