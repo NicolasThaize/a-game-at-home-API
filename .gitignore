@@ -6,4 +6,7 @@
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/
-
+*.png
+.idea MyProject/*.png
+MyProject/db.sqlite3
+.idea
