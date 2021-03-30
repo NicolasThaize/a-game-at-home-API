@@ -7,15 +7,23 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
 
 # Create your views here.
+
+#Creating modal view set, no need for functions as it's fully based on ModalAPI Views.
 class UserViewSet(viewsets.ModelViewSet):
+    #Defining model that we will retrieve data from
     queryset = User.objects.all()
+    #Defining serializer data that we want to display
     serializer_class = UserSerializer
+    #Defining authentication methods for this view.
     authentication_classes = [SessionAuthentication, BasicAuthentication, TokenAuthentication]
+    #Defining simple method that lets user access view if authenticated by any mean
     permission_classes = [IsAuthenticated]
 
 class TeamViewSet(GetSerializerClassMixin,viewsets.ModelViewSet):
     queryset = Team.objects.all()
     serializer_class = TeamSerializerPOST
+
+    #Defining dynamic serializer choice depending on which request type user does
     serializer_action_classes = {
         'list': TeamSerializerGET,
         'retrieve' : TeamSerializerGET,
