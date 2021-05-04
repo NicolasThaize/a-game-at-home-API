@@ -1,23 +1,24 @@
 from django.db import models
 from django.core.validators import MinValueValidator,MaxValueValidator
 from django.forms.fields import BooleanField
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
-class User(models.Model):
+class AppUser(AbstractUser):
     name = models.CharField(max_length=50)
-    birthDate = models.DateTimeField()
-    email = models.EmailField(unique=True)
-    password = models.CharField(max_length=25)
+    email = models.EmailField(max_length=254)
+    birthDate = models.DateField()
+    password = models.CharField(max_length=254)
     teams = models.ManyToManyField('Team',blank=True,null=True)
-
+    REQUIRED_FIELDS = ['name', 'birthDate']
     def __str__(self):
         return self.name
 
 class Team(models.Model):
     name = models.CharField(max_length=50)
     totalPoints = models.IntegerField(default=0)
-    users = models.ManyToManyField('User')
+    users = models.ManyToManyField('AppUser')
 
     def __str__(self):
         return self.name
@@ -49,6 +50,4 @@ class Challenge(models.Model):
 
     def __str__(self):
         return self.name
-    
-    ;
 

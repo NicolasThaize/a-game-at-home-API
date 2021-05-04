@@ -1,9 +1,12 @@
 from django.contrib import admin
-from .models import User,Team,Proof,Session,Challenge
+from .models import AppUser,Team,Proof,Session,Challenge
+
+class CustomUserAdmin(admin.ModelAdmin):
+    model = AppUser
 
 # Register your models here.
 
-admin.site.register(User)
+admin.site.register(AppUser, CustomUserAdmin)
 admin.site.register(Team)
 admin.site.register(Proof)
 admin.site.register(Session)
