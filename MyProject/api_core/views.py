@@ -22,7 +22,6 @@ class UserViewSet(viewsets.ModelViewSet):
     #Defining serializer data that we want to display
     serializer_class = UserSerializer
     #Defining authentication methods for this view.
-    authentication_classes = [SessionAuthentication, BasicAuthentication, TokenAuthentication]
     #Defining simple method that lets user access view if authenticated by any mean
     permission_classes = [IsPostOrIsAuthenticated]
 
@@ -35,7 +34,6 @@ class TeamViewSet(GetSerializerClassMixin,viewsets.ModelViewSet):
         'list': TeamSerializerGET,
         'retrieve' : TeamSerializerGET,
     }
-    authentication_classes = [SessionAuthentication, BasicAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
 
@@ -46,17 +44,14 @@ class ProofViewSet(GetSerializerClassMixin,viewsets.ModelViewSet):
         'list': ProofSerializerGET,
         'retrieve' : ProofSerializerGET,
     }
-    authentication_classes = [SessionAuthentication, BasicAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
 class SessionViewSet(viewsets.ModelViewSet):
     queryset = Session.objects.all()
     serializer_class = SessionSerializer
-    authentication_classes = [SessionAuthentication, BasicAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
 class ChallengeViewSet(viewsets.ModelViewSet):
     queryset = Challenge.objects.all()
     serializer_class = ChallengeSerializer
-    authentication_classes = [SessionAuthentication, BasicAuthentication, TokenAuthentication]
     permission_classes = [IsAuthenticated]
