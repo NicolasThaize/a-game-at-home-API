@@ -1,7 +1,6 @@
 from .mixins import GetSerializerClassMixin
-from .models import User,Team,Proof,Session,Challenge
 from .serializers import UserSerializer,TeamSerializerGET,TeamSerializerPOST,ProofSerializerGET,ProofSerializerPOST,SessionSerializer,ChallengeSerializer
-from .models import User,Team,Proof,Session,Challenge
+from .models import CustomUser,Team,Proof,Session,Challenge
 from rest_framework.authentication import SessionAuthentication,TokenAuthentication , BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
@@ -11,7 +10,7 @@ from rest_framework import viewsets
 #Creating modal view set, no need for functions as it's fully based on ModalAPI Views.
 class UserViewSet(viewsets.ModelViewSet):
     #Defining model that we will retrieve data from
-    queryset = User.objects.all()
+    queryset = CustomUser.objects.all()
     #Defining serializer data that we want to display
     serializer_class = UserSerializer
     #Defining authentication methods for this view.

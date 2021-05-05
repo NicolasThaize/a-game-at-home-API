@@ -1,10 +1,11 @@
 from rest_framework import serializers
-from .models import User,Team,Proof,Session,Challenge
+from .models import CustomUser,Team,Proof,Session,Challenge
 
 class UserSerializer(serializers.ModelSerializer):
+    birthDate = serializers.DateField(input_formats=['%d-%m-%Y',])
     class Meta:
-        model = User
-        fields = ['id','url','name', 'birthDate', 'email', 'teams']
+        model = CustomUser
+        fields = ['id','url','username', 'first_name', 'last_name', 'birthDate', 'email', 'teams']
 ###################################################################################
 class TeamSerializerGET(serializers.ModelSerializer):
     users = UserSerializer(many=True)
