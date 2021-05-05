@@ -40,9 +40,10 @@ class TeamSerializerPOST(serializers.ModelSerializer):
 ###################################################################################
 
 class SessionSerializer(serializers.ModelSerializer):
+    teams = TeamSerializerGET(many=True)
     class Meta:
         model = Session
-        fields = ['id', 'name','description','startDate','endDate']
+        fields = ['id', 'name','description','startDate','endDate', 'teams']
 
 class ChallengeSerializer(serializers.ModelSerializer):
     class Meta:

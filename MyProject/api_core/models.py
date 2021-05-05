@@ -9,7 +9,6 @@ from django.contrib.auth.models import AbstractUser
 class CustomUser(AbstractUser):
     birthDate = models.DateField()
     teams = models.ManyToManyField('Team',blank=True)
-
     REQUIRED_FIELDS = ['birthDate', 'email', 'first_name', 'last_name']
     def __str__(self):
         return self.username
@@ -37,6 +36,7 @@ class Session(models.Model):
     description = models.TextField()
     startDate = models.DateTimeField(auto_now_add=True)
     endDate = models.DateTimeField()
+    teams = models.ManyToManyField('Team',blank=True)
 
     def __str__(self):
         return self.name
