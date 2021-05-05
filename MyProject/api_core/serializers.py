@@ -1,9 +1,10 @@
 from rest_framework import serializers
-from .models import CustomUser,Team,Proof,Session,Challenge
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+from .models import CustomUser, Team, Proof, Session, Challenge
+
 
 # Auth related:
-
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 # Adding all needed informations to token
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -18,32 +19,30 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         return token
 
-
-
 ###################################################################################
 class UserSerializer(serializers.ModelSerializer):
     birthDate = serializers.DateField(input_formats=['%d-%m-%Y',])
     class Meta:
         model = CustomUser
-        fields = ['id','url','username', 'first_name', 'last_name', 'birthDate', 'email', 'teams']
+        fields = ['id', 'url', 'username', 'first_name', 'last_name', 'birthDate', 'email', 'team']
 ###################################################################################
 class TeamSerializerGET(serializers.ModelSerializer):
     users = UserSerializer(many=True)
     class Meta:
         model = Team
-        fields = ['id', 'url', 'name', 'totalPoints', 'users']
+        fields = ['id', 'url', 'name', 'totalPoints', 'sessions', 'users']
 
 class TeamSerializerPOST(serializers.ModelSerializer):
     class Meta:
         model = Team
-        fields = ['id', 'url', 'name', 'totalPoints', 'users']
+        fields = ['id', 'url', 'name', 'totalPoints', 'sessions', 'users']
 ###################################################################################
 
 class SessionSerializer(serializers.ModelSerializer):
     teams = TeamSerializerGET(many=True)
     class Meta:
         model = Session
-        fields = ['id', 'name','description','startDate','endDate', 'teams']
+        fields = ['id', 'name', 'description', 'startDate', 'endDate', 'teams']
 
 class ChallengeSerializer(serializers.ModelSerializer):
     class Meta:

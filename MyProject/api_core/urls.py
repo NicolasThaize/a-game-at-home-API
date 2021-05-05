@@ -10,7 +10,7 @@ router.register('users', UserViewSet)
 router.register('teams', TeamViewSet)
 router.register('proofs', ProofViewSet)
 router.register('sessions', SessionViewSet)
-router.register('challenge', ChallengeViewSet)
+router.register('challenges', ChallengeViewSet)
 
 urlpatterns = [
     #path('article/',article_list),
