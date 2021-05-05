@@ -29,7 +29,9 @@ SECRET_KEY = 'y**0kf0@59-)rmdf6tot66@)sju&aw%n#3_eqflgr#!s@9kc3^'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',
+)
 
 # Application definition
 
@@ -41,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',
     'rest_framework.authtoken',
     'api_core',
 ]
@@ -48,6 +51,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
