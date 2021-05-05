@@ -80,6 +80,7 @@ REST_FRAMEWORK = {
     "DATE_INPUT_FORMATS": [("%d-%m-%Y"),],
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
+        'api_core.permissions.IsPostOrIsAuthenticated',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
