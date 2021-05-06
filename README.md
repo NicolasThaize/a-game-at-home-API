@@ -2,6 +2,10 @@
 
 1:
     `pip install django`
+    `pip install djangorestframework`
+    `pip install djangorestframework-simplejwt`
+    `pip install django-cors-headers`
+    
 
 2:
     `django-admin startproject MyAPI`

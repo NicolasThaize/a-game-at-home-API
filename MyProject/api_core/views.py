@@ -3,7 +3,8 @@ from .serializers import UserSerializer,TeamSerializerGET,TeamSerializerPOST,Pro
 from .models import CustomUser,Team,Proof,Session,Challenge
 from rest_framework.authentication import SessionAuthentication,TokenAuthentication , BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import viewsets
+from rest_framework import viewsets,status
+
 from .permissions import IsPostOrIsAuthenticated
 
 # Create your views here.
@@ -11,9 +12,27 @@ from .permissions import IsPostOrIsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import permissions
 from .serializers import MyTokenObtainPairSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
 class ObtainTokenPairWithInfosView(TokenObtainPairView):
     permission_classes = (permissions.AllowAny,)
     serializer_class = MyTokenObtainPairSerializer
+
+class LogoutAndBlacklistRefreshTokenForUserView(APIView):
+    permission_classes = (permissions.AllowAny,)
+    authentication_classes = ()
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh_token"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
 
 #Creating modal view set, no need for functions as it's fully based on ModalAPI Views.
 class UserViewSet(viewsets.ModelViewSet):
