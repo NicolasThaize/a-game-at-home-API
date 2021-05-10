@@ -50,5 +50,14 @@ class Challenge(models.Model):
 
     def __str__(self):
         return self.name
+
+class Article(models.Model):
+    author = models.CharField(max_length=50)
+    title = models.CharField(max_length=30)
+    textContent = models.TextField(max_length=280)
+    imageContent = models.ImageField()
+
+    def __str__(self):
+        return self.title
     
 

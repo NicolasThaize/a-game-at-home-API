@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from .models import CustomUser, Team, Proof, Session, Challenge
+from .models import CustomUser, Team, Proof, Session, Challenge, Article
 
 
 # Auth related:
@@ -21,10 +21,25 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 ###################################################################################
 class UserSerializer(serializers.ModelSerializer):
-    birthDate = serializers.DateField(input_formats=['%d-%m-%Y',])
+    birthDate = serializers.DateField(input_formats=['%d-%m-%Y', ])
     class Meta:
         model = CustomUser
-        fields = ['id', 'url', 'username', 'first_name', 'last_name', 'birthDate', 'email', 'team']
+        fields = ['id', 'url', 'username', 'first_name', 'last_name', 'birthDate', 'email', 'team','password']
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        print(validated_data)
+        user = CustomUser(
+            email=validated_data['email'],
+            username=validated_data['username'],
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name'],
+            birthDate=validated_data['birthDate'],
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
+
 ###################################################################################
 class TeamSerializerGET(serializers.ModelSerializer):
     users = UserSerializer(many=True)
@@ -62,3 +77,9 @@ class ProofSerializerPOST(serializers.ModelSerializer):
     class Meta:
         model = Proof
         fields = ['id','photo','video','challenge','team','validated']
+
+###################################################################################
+class ArticleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Article
+        fields = ['id','author','title','textContent', 'imageContent']
