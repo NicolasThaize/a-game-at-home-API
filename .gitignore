@@ -10,3 +10,5 @@
 .idea MyProject/*.png
 MyProject/db.sqlite3
 .idea
+
+env
