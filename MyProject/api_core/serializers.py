@@ -82,4 +82,4 @@ class ProofSerializerPOST(serializers.ModelSerializer):
 class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
-        fields = ['id','author','title','textContent', 'imageContent']
+        fields = ['id','author','title','textContent']
