@@ -5,7 +5,7 @@ from rest_framework.authentication import SessionAuthentication,TokenAuthenticat
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets,status
 
-from .permissions import IsPostOrIsAuthenticated
+from .permissions import IsPostOrIsAuthenticated, IsGetOrIsAuthenticated
 
 # Create your views here.
 # Auth related:
@@ -68,7 +68,7 @@ class ProofViewSet(GetSerializerClassMixin,viewsets.ModelViewSet):
 class SessionViewSet(viewsets.ModelViewSet):
     queryset = Session.objects.all()
     serializer_class = SessionSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsGetOrIsAuthenticated]
 
 class ChallengeViewSet(viewsets.ModelViewSet):
     queryset = Challenge.objects.all()
@@ -78,4 +78,4 @@ class ChallengeViewSet(viewsets.ModelViewSet):
 class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsGetOrIsAuthenticated]
