@@ -40,6 +40,19 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+    def update(self, instance, validated_data):
+        print(validated_data)
+        instance.username = validated_data.get('username', instance.username)
+        instance.email = validated_data.get('email', instance.email)
+        instance.username = validated_data.get('username', instance.username)
+        for attr, value in validated_data.items():
+            if attr == 'password':
+                instance.set_password(value)
+            else:
+                setattr(instance, attr, value)
+            instance.save()
+            return instance
+
 ###################################################################################
 class TeamSerializerGET(serializers.ModelSerializer):
     users = UserSerializer(many=True)
