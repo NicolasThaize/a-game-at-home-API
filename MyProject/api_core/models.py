@@ -37,7 +37,7 @@ class Session(models.Model):
     description = models.TextField()
     startDate = models.DateField()
     endDate = models.DateField()
-    teams = models.ManyToManyField('Team', related_name='session', blank=True)
+    teams = models.ManyToManyField('Team', related_name='session')
 
     def __str__(self):
         return self.name

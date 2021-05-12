@@ -27,6 +27,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'url', 'username', 'first_name', 'last_name', 'birthDate', 'email', 'team','password']
         extra_kwargs = {'password': {'write_only': True}}
 
+"""
     def create(self, validated_data):
         print(validated_data)
         user = CustomUser(
@@ -52,18 +53,18 @@ class UserSerializer(serializers.ModelSerializer):
                 setattr(instance, attr, value)
             instance.save()
             return instance
-
+"""
 ###################################################################################
 class TeamSerializerGET(serializers.ModelSerializer):
     users = UserSerializer(many=True)
     class Meta:
         model = Team
-        fields = ['id', 'url', 'name', 'totalPoints', 'sessions', 'users']
+        fields = ['id', 'url', 'name', 'totalPoints', 'session', 'users']
 
 class TeamSerializerPOST(serializers.ModelSerializer):
     class Meta:
         model = Team
-        fields = ['id', 'url', 'name', 'totalPoints', 'sessions', 'users']
+        fields = ['id', 'url', 'name', 'totalPoints', 'session', 'users']
 ###################################################################################
 
 class SessionSerializerGET(serializers.ModelSerializer):
