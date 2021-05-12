@@ -1,5 +1,5 @@
 from .mixins import GetSerializerClassMixin
-from .serializers import UserSerializer,TeamSerializerGET,TeamSerializerPOST,ProofSerializerGET,ProofSerializerPOST,SessionSerializer,ChallengeSerializer,ArticleSerializer
+from .serializers import UserSerializer,TeamSerializerGET,TeamSerializerPOST,ProofSerializerGET,ProofSerializerPOST,SessionSerializerGET, SessionSerializerPOST, ChallengeSerializer,ArticleSerializer
 from .models import CustomUser,Team,Proof,Session,Challenge,Article
 from rest_framework.authentication import SessionAuthentication,TokenAuthentication , BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -67,7 +67,11 @@ class ProofViewSet(GetSerializerClassMixin,viewsets.ModelViewSet):
 
 class SessionViewSet(viewsets.ModelViewSet):
     queryset = Session.objects.all()
-    serializer_class = SessionSerializer
+    serializer_class = SessionSerializerPOST
+    serializer_action_classes = {
+        'list': SessionSerializerGET,
+        'retrieve': SessionSerializerGET,
+    }
     permission_classes = [IsGetOrIsAuthenticated]
 
 class ChallengeViewSet(viewsets.ModelViewSet):

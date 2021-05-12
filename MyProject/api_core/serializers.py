@@ -66,12 +66,23 @@ class TeamSerializerPOST(serializers.ModelSerializer):
         fields = ['id', 'url', 'name', 'totalPoints', 'sessions', 'users']
 ###################################################################################
 
-class SessionSerializer(serializers.ModelSerializer):
+class SessionSerializerGET(serializers.ModelSerializer):
+    startDate = serializers.DateField(input_formats=['%d-%m-%Y', ])
+    endDate = serializers.DateField(input_formats=['%d-%m-%Y', ])
     teams = TeamSerializerGET(many=True)
     class Meta:
         model = Session
         fields = ['id', 'name', 'description', 'startDate', 'endDate', 'teams']
 
+class SessionSerializerPOST(serializers.ModelSerializer):
+    startDate = serializers.DateField(input_formats=['%d-%m-%Y', ])
+    endDate = serializers.DateField(input_formats=['%d-%m-%Y', ])
+    class Meta:
+        model = Session
+        fields = ['id', 'name', 'description', 'startDate', 'endDate', 'teams']
+
+
+###################################################################################
 class ChallengeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Challenge
