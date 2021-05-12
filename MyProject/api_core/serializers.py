@@ -16,17 +16,19 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['first_name'] = user.first_name
         token['last_name'] = user.last_name
         token['email'] = user.email
+        token['birth_date'] = user.birth_date.strftime("%d-%m-%Y")
 
         return token
 
+
 ###################################################################################
 class UserSerializer(serializers.ModelSerializer):
-    birthDate = serializers.DateField(input_formats=['%d-%m-%Y', ])
+    birth_date = serializers.DateField(input_formats=['%d-%m-%Y', ])
+
     class Meta:
         model = CustomUser
-        fields = ['id', 'url', 'username', 'first_name', 'last_name', 'birthDate', 'email', 'team','password']
+        fields = ['id', 'url', 'username', 'first_name', 'last_name', 'birth_date', 'email', 'team', 'password']
         extra_kwargs = {'password': {'write_only': True}}
-
 
     def create(self, validated_data):
         print(validated_data)
@@ -35,7 +37,7 @@ class UserSerializer(serializers.ModelSerializer):
             username=validated_data['username'],
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
-            birthDate=validated_data['birthDate'],
+            birth_date=validated_data['birth_date'],
         )
         user.set_password(validated_data['password'])
         user.save()
@@ -54,57 +56,69 @@ class UserSerializer(serializers.ModelSerializer):
             instance.save()
             return instance
 
+
 ###################################################################################
 class TeamSerializerGET(serializers.ModelSerializer):
     users = UserSerializer(many=True)
+
     class Meta:
         model = Team
-        fields = ['id', 'url', 'name', 'totalPoints', 'session', 'users']
+        fields = ['id', 'url', 'name', 'total_points', 'session', 'users']
+
 
 class TeamSerializerPOST(serializers.ModelSerializer):
     class Meta:
         model = Team
-        fields = ['id', 'url', 'name', 'totalPoints', 'session', 'users']
+        fields = ['id', 'url', 'name', 'total_points', 'session', 'users']
+
+
 ###################################################################################
 
 class SessionSerializerGET(serializers.ModelSerializer):
-    startDate = serializers.DateField(input_formats=['%d-%m-%Y', ])
-    endDate = serializers.DateField(input_formats=['%d-%m-%Y', ])
+    start_date = serializers.DateField(input_formats=['%d-%m-%Y', ])
+    end_date = serializers.DateField(input_formats=['%d-%m-%Y', ])
     teams = TeamSerializerGET(many=True)
+
     class Meta:
         model = Session
-        fields = ['id', 'name', 'description', 'startDate', 'endDate', 'teams']
+        fields = ['id', 'name', 'description', 'start_date', 'end_date', 'teams']
+
 
 class SessionSerializerPOST(serializers.ModelSerializer):
-    startDate = serializers.DateField(input_formats=['%d-%m-%Y', ])
-    endDate = serializers.DateField(input_formats=['%d-%m-%Y', ])
+    start_date = serializers.DateField(input_formats=['%d-%m-%Y', ])
+    end_date = serializers.DateField(input_formats=['%d-%m-%Y', ])
+
     class Meta:
         model = Session
-        fields = ['id', 'name', 'description', 'startDate', 'endDate', 'teams']
+        fields = ['id', 'name', 'description', 'start_date', 'end_date', 'teams']
 
 
 ###################################################################################
 class ChallengeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Challenge
-        fields = ['id','name','points','description','session']
+        fields = ['id', 'name', 'points', 'description', 'session']
+
 
 ###################################################################################
 
 class ProofSerializerGET(serializers.ModelSerializer):
     challenge = ChallengeSerializer(many=True)
     team = TeamSerializerGET(many=True)
+
     class Meta:
         model = Proof
-        fields = ['id','photo','video','challenge','team','validated']
+        fields = ['id', 'photo', 'video', 'challenge', 'team', 'validated']
+
 
 class ProofSerializerPOST(serializers.ModelSerializer):
     class Meta:
         model = Proof
-        fields = ['id','photo','video','challenge','team','validated']
+        fields = ['id', 'photo', 'video', 'challenge', 'team', 'validated']
+
 
 ###################################################################################
 class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
-        fields = ['id','author','title','textContent']
+        fields = ['id', 'author', 'title', 'text_content', 'image_url']
