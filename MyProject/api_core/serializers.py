@@ -27,7 +27,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'url', 'username', 'first_name', 'last_name', 'birthDate', 'email', 'team','password']
         extra_kwargs = {'password': {'write_only': True}}
 
-"""
+
     def create(self, validated_data):
         print(validated_data)
         user = CustomUser(
@@ -53,7 +53,7 @@ class UserSerializer(serializers.ModelSerializer):
                 setattr(instance, attr, value)
             instance.save()
             return instance
-"""
+
 ###################################################################################
 class TeamSerializerGET(serializers.ModelSerializer):
     users = UserSerializer(many=True)
