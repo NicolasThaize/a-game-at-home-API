@@ -59,8 +59,8 @@ class Challenge(models.Model):
 class Article(models.Model):
     author = models.CharField(max_length=50)
     title = models.CharField(max_length=30)
+    image_url = models.CharField(max_length=254, default='')
     text_content = models.TextField(max_length=280)
-    image_url = models.charField(max_length=255)
 
     def __str__(self):
         return self.title
