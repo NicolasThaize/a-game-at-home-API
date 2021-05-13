@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from .models import CustomUser, Team, Proof, Session, Challenge, Article
+from .models import CustomUser, Team, Proof, Session, Challenge, Article, TeamPoint
 
 
 # Auth related:
@@ -63,13 +63,13 @@ class TeamSerializerGET(serializers.ModelSerializer):
 
     class Meta:
         model = Team
-        fields = ['id', 'url', 'name', 'total_points', 'session', 'users']
+        fields = ['id', 'url', 'name', 'session', 'users', 'session_point']
 
 
 class TeamSerializerPOST(serializers.ModelSerializer):
     class Meta:
         model = Team
-        fields = ['id', 'url', 'name', 'total_points', 'session', 'users']
+        fields = ['id', 'url', 'name', 'session', 'users', 'session_point']
 
 
 ###################################################################################
@@ -81,7 +81,7 @@ class SessionSerializerGET(serializers.ModelSerializer):
 
     class Meta:
         model = Session
-        fields = ['id', 'name', 'description', 'start_date', 'end_date', 'teams']
+        fields = ['id', 'name', 'description', 'start_date', 'end_date', 'teams', 'team_point']
 
 
 class SessionSerializerPOST(serializers.ModelSerializer):
@@ -90,7 +90,7 @@ class SessionSerializerPOST(serializers.ModelSerializer):
 
     class Meta:
         model = Session
-        fields = ['id', 'name', 'description', 'start_date', 'end_date', 'teams']
+        fields = ['id', 'name', 'description', 'start_date', 'end_date', 'teams', 'team_point']
 
 
 ###################################################################################
@@ -122,3 +122,14 @@ class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
         fields = ['id', 'author', 'title', 'text_content', 'image_url']
+
+
+###################################################################################
+
+class TeamPointSerializer(serializers.ModelSerializer):
+    teams = TeamSerializerGET
+    sessions = SessionSerializerGET
+
+    class Meta:
+        model = TeamPoint
+        fields = ['id', 'teams', 'sessions', 'points']

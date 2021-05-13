@@ -16,9 +16,9 @@ class CustomUser(AbstractUser):
 
 class Team(models.Model):
     name = models.CharField(max_length=50)
-    total_points = models.IntegerField(default=0)
     users = models.ManyToManyField('CustomUser', related_name='team')
     sessions = models.ManyToManyField('Session', blank=True)
+    session_points = models.ManyToManyField('TeamPoint', blank=True)
 
     def __str__(self):
         return self.name
@@ -40,7 +40,8 @@ class Session(models.Model):
     description = models.TextField()
     start_date = models.DateField()
     end_date = models.DateField()
-    teams = models.ManyToManyField('Team', related_name='session')
+    teams = models.ManyToManyField('Team', related_name='session', blank=True)
+    team_points = models.ManyToManyField('TeamPoint', blank=True)
 
     def __str__(self):
         return self.name
@@ -64,3 +65,12 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class TeamPoint(models.Model):
+    points = models.IntegerField(default=0)
+    teams = models.ManyToManyField('Team', related_name='session_point')
+    sessions = models.ManyToManyField('Session', related_name='team_point')
+
+    def __str__(self):
+        return self.points

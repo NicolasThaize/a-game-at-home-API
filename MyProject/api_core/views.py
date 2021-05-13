@@ -1,7 +1,8 @@
 from .mixins import GetSerializerClassMixin
 from .serializers import UserSerializer, TeamSerializerGET, TeamSerializerPOST, ProofSerializerGET, \
-    ProofSerializerPOST, SessionSerializerGET, SessionSerializerPOST, ChallengeSerializer, ArticleSerializer
-from .models import CustomUser, Team, Proof, Session, Challenge, Article
+    ProofSerializerPOST, SessionSerializerGET, SessionSerializerPOST, ChallengeSerializer, ArticleSerializer, \
+    TeamPointSerializer
+from .models import CustomUser, Team, Proof, Session, Challenge, Article, TeamPoint
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets, status
@@ -89,4 +90,10 @@ class ChallengeViewSet(viewsets.ModelViewSet):
 class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
+    permission_classes = [IsGetOrIsAuthenticated]
+
+
+class TeamPointsViewSet(viewsets.ModelViewSet):
+    queryset = TeamPoint.objects.all()
+    serializer_class = TeamPointSerializer
     permission_classes = [IsGetOrIsAuthenticated]
