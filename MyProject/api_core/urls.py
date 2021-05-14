@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from .views import UserViewSet, TeamViewSet, ProofViewSet, SessionViewSet, ChallengeViewSet, ArticleViewSet, \
-    LogoutAndBlacklistRefreshTokenForUserView, TeamPointsViewSet
+    LogoutAndBlacklistRefreshTokenForUserView, TeamPointsViewSet, UserTeamAuthorizedViewSet
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt import views as jwt_views
 from .views import ObtainTokenPairWithInfosView
@@ -14,6 +14,7 @@ router.register('sessions', SessionViewSet)
 router.register('challenges', ChallengeViewSet)
 router.register('articles', ArticleViewSet)
 router.register('team_points', TeamPointsViewSet)
+router.register('user_team_authorized', UserTeamAuthorizedViewSet)
 
 urlpatterns = [
     # path('article/',article_list),

@@ -8,6 +8,8 @@ from django.db import models
 class CustomUser(AbstractUser):
     birth_date = models.DateField()
     teams = models.ManyToManyField('Team', blank=True)
+    authorized_teams = models.ManyToManyField('UserTeamAuthorized', blank=True)
+
     REQUIRED_FIELDS = ['birth_date', 'email', 'first_name', 'last_name']
 
     def __str__(self):
@@ -19,9 +21,18 @@ class Team(models.Model):
     users = models.ManyToManyField('CustomUser', related_name='team')
     sessions = models.ManyToManyField('Session', blank=True)
     session_points = models.ManyToManyField('TeamPoint', blank=True)
+    authorized_users = models.ManyToManyField('UserTeamAuthorized', blank=True)
 
     def __str__(self):
         return self.name
+
+
+class UserTeamAuthorized(models.Model):
+    teams = models.ManyToManyField('Team', related_name='authorized_user')
+    users = models.ManyToManyField('CustomUser', related_name='authorized_team')
+
+    def __str__(self):
+        return self.id
 
 
 class Proof(models.Model):

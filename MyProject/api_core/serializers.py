@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from .models import CustomUser, Team, Proof, Session, Challenge, Article, TeamPoint
+from .models import CustomUser, Team, UserTeamAuthorized, Proof, Session, Challenge, Article, TeamPoint
 
 
 # Auth related:
@@ -27,7 +27,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ['id', 'url', 'username', 'first_name', 'last_name', 'birth_date', 'email', 'team', 'password']
+        fields = ['id', 'url', 'username', 'first_name', 'last_name', 'birth_date', 'email', 'team', 'password',
+                  'authorized_team']
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -63,13 +64,24 @@ class TeamSerializerGET(serializers.ModelSerializer):
 
     class Meta:
         model = Team
-        fields = ['id', 'url', 'name', 'session', 'users', 'session_point']
+        fields = ['id', 'url', 'name', 'session', 'users', 'session_point', 'authorized_user']
 
 
 class TeamSerializerPOST(serializers.ModelSerializer):
     class Meta:
         model = Team
-        fields = ['id', 'url', 'name', 'session', 'users', 'session_point']
+        fields = ['id', 'url', 'name', 'session', 'users', 'session_point', 'authorized_user']
+
+
+###################################################################################
+
+class UserTeamAuthorizedSerializer(serializers.ModelSerializer):
+    teams = TeamSerializerGET
+    users = UserSerializer
+
+    class Meta:
+        model = UserTeamAuthorized
+        fields = ['id', 'teams', 'users']
 
 
 ###################################################################################
