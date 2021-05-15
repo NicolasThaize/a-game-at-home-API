@@ -17,6 +17,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['last_name'] = user.last_name
         token['email'] = user.email
         token['birth_date'] = user.birth_date.strftime("%d-%m-%Y")
+        token['admin'] = user.is_superuser
 
         return token
 
