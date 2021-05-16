@@ -46,6 +46,15 @@ class Proof(models.Model):
         return self.id
 
 
+class Challenge(models.Model):
+    points = models.IntegerField()
+    name = models.CharField(max_length=50)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+
 class Session(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
@@ -53,16 +62,8 @@ class Session(models.Model):
     end_date = models.DateField()
     teams = models.ManyToManyField('Team', related_name='session', blank=True)
     team_points = models.ManyToManyField('TeamPoint', blank=True)
+    challenges = models.ManyToManyField(Challenge, blank=True)
 
-    def __str__(self):
-        return self.name
-
-
-class Challenge(models.Model):
-    points = models.IntegerField()
-    name = models.CharField(max_length=50)
-    description = models.TextField()
-    session = models.ForeignKey(Session, blank=True, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
