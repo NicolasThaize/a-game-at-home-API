@@ -40,7 +40,7 @@ class Proof(models.Model):
     video = models.FileField(null=True)
     challenge = models.ManyToManyField('Challenge', blank=True)
     team = models.ManyToManyField(Team, blank=True)
-    validated = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(1)], default=0)
+    validated = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(3)], default=3)
 
     def __str__(self):
         return self.id
