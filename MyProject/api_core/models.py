@@ -16,12 +16,25 @@ class CustomUser(AbstractUser):
         return self.username
 
 
+class Proof(models.Model):
+    photo = models.FileField(null=True)
+    video = models.FileField(null=True)
+    challenge = models.ManyToManyField('Challenge', blank=True)
+    sessions = models.ManyToManyField('Session', blank=True)
+    teams = models.ManyToManyField('Team')
+    validated = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(3)], default=3)
+
+    def __str__(self):
+        return self.id
+
+
 class Team(models.Model):
     name = models.CharField(max_length=50)
     users = models.ManyToManyField('CustomUser', related_name='team')
     sessions = models.ManyToManyField('Session', blank=True)
     session_points = models.ManyToManyField('TeamPoint', blank=True)
     authorized_users = models.ManyToManyField('UserTeamAuthorized', blank=True)
+    session_proofs = models.ManyToManyField('Proof', related_name="team", blank=True)
 
     def __str__(self):
         return self.name
@@ -30,17 +43,6 @@ class Team(models.Model):
 class UserTeamAuthorized(models.Model):
     teams = models.ManyToManyField('Team', related_name='authorized_user')
     users = models.ManyToManyField('CustomUser', related_name='authorized_team')
-
-    def __str__(self):
-        return self.id
-
-
-class Proof(models.Model):
-    photo = models.FileField(null=True)
-    video = models.FileField(null=True)
-    challenge = models.ManyToManyField('Challenge', blank=True)
-    team = models.ManyToManyField(Team, blank=True)
-    validated = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(3)], default=3)
 
     def __str__(self):
         return self.id
@@ -63,7 +65,7 @@ class Session(models.Model):
     teams = models.ManyToManyField('Team', related_name='session', blank=True)
     team_points = models.ManyToManyField('TeamPoint', blank=True)
     challenges = models.ManyToManyField(Challenge, blank=True)
-
+    team_proofs = models.ManyToManyField(Proof, blank=True, related_name='session')
 
     def __str__(self):
         return self.name
