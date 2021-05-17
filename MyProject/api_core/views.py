@@ -6,7 +6,7 @@ from .models import CustomUser, Team, UserTeamAuthorized, Proof, Session, Challe
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets, status
-from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 
 
 from .permissions import IsPostOrIsAuthenticated, IsGetOrIsAuthenticated
@@ -78,7 +78,7 @@ class ProofViewSet(GetSerializerClassMixin, viewsets.ModelViewSet):
     }
     permission_classes = [IsAuthenticated]
 
-    parser_classes = (MultiPartParser, FormParser)
+    parser_classes = (MultiPartParser, FormParser, JSONParser)
 
     def post(self, request, *args, **kwargs):
         file_serializer = MyFileSerializer(data=request.data)
