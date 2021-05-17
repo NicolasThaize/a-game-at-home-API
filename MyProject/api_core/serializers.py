@@ -97,6 +97,8 @@ class ChallengeSerializer(serializers.ModelSerializer):
 class ProofSerializerGET(serializers.ModelSerializer):
     challenge = ChallengeSerializer(many=True)
     team = TeamSerializerGET(many=True)
+    photo = serializers.ImageField(max_length=None, use_url=True)
+    video = serializers.ImageField(max_length=None, use_url=True)
 
     class Meta:
         model = Proof
@@ -105,6 +107,7 @@ class ProofSerializerGET(serializers.ModelSerializer):
 
 
 class ProofSerializerPOST(serializers.ModelSerializer):
+
     class Meta:
         model = Proof
         fields = ['id', 'photo', 'video', 'challenge', 'team', 'validated', 'session']

@@ -162,3 +162,4 @@ SIMPLE_JWT = {
 
 AUTH_USER_MODEL = "api_core.CustomUser"
 
+MEDIA_URL = '/media/'

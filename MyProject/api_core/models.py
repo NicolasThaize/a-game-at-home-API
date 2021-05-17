@@ -17,20 +17,20 @@ class CustomUser(AbstractUser):
 
 
 class Proof(models.Model):
-    photo = models.FileField(null=True)
-    video = models.FileField(null=True)
+    photo = models.FileField(null=True, blank=True, upload_to='proofsPhotos/', default='proofsPhotos/None/No-img.jpg')
+    video = models.FileField(null=True, blank=True, upload_to='proofsVideos/', default='proofsVideos/None/No-video.jpg')
     challenge = models.ManyToManyField('Challenge', blank=True)
     sessions = models.ManyToManyField('Session', blank=True)
     teams = models.ManyToManyField('Team')
     validated = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(3)], default=3)
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 
 class Team(models.Model):
     name = models.CharField(max_length=50)
-    users = models.ManyToManyField('CustomUser', related_name='team')
+    users = models.ManyToManyField('CustomUser', related_name='team', blank=True)
     sessions = models.ManyToManyField('Session', blank=True)
     session_points = models.ManyToManyField('TeamPoint', blank=True)
     authorized_users = models.ManyToManyField('UserTeamAuthorized', blank=True)

@@ -6,6 +6,8 @@ from .models import CustomUser, Team, UserTeamAuthorized, Proof, Session, Challe
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets, status
+from rest_framework.parsers import MultiPartParser, FormParser
+
 
 from .permissions import IsPostOrIsAuthenticated, IsGetOrIsAuthenticated
 
@@ -75,6 +77,16 @@ class ProofViewSet(GetSerializerClassMixin, viewsets.ModelViewSet):
         'retrieve': ProofSerializerGET,
     }
     permission_classes = [IsAuthenticated]
+
+    parser_classes = (MultiPartParser, FormParser)
+
+    def post(self, request, *args, **kwargs):
+        file_serializer = MyFileSerializer(data=request.data)
+        if file_serializer.is_valid():
+            file_serializer.save()
+            return Response(file_serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class SessionViewSet(viewsets.ModelViewSet):
