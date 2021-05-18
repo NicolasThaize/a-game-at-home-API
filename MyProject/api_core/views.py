@@ -60,7 +60,7 @@ class TeamViewSet(GetSerializerClassMixin, viewsets.ModelViewSet):
         'list': TeamSerializerGET,
         'retrieve': TeamSerializerGET,
     }
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsGetOrIsAuthenticated]
 
 
 class UserTeamAuthorizedViewSet(viewsets.ModelViewSet):
